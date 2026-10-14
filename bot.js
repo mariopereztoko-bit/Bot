@@ -8,20 +8,41 @@ const token = process.env.TELEGRAM_BOT_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// ATUALIZADO: Modelo leve, rápido e 100% suportado no plano Gratuito da Groq
-const GROQ_MODEL = 'llama-3.1-8b-instant'; 
-
 let botUsername = '';
 let botId = '';
+let GROQ_MODEL = 'openai/gpt-oss-20b'; // Modelo de segurança caso a busca falhe
 
-bot.getMe().then((info) => {
-    botUsername = info.username;
-    botId = info.id;
-    console.log(`Bot iniciado com sucesso como @${botUsername} e pronto a moderar.`);
-}).catch(err => {
-    console.error("Erro ao contactar a API do Telegram no arranque:", err.message);
-});
+// ==========================================
+// INICIALIZAÇÃO E AUTO-SELEÇÃO DE MODELO
+// ==========================================
+async function iniciarBot() {
+    try {
+        // 1. Inicia o Telegram
+        const info = await bot.getMe();
+        botUsername = info.username;
+        botId = info.id;
+        console.log(`[SUCESSO] Bot do Telegram iniciado como @${botUsername}`);
 
+        // 2. Procura automaticamente um modelo válido da Groq
+        const modelos = await groq.models.list();
+        if (modelos && modelos.data && modelos.data.length > 0) {
+            // Pega no primeiro modelo disponível na sua conta
+            GROQ_MODEL = modelos.data[0].id;
+            console.log(`[SUCESSO] Modelo da Groq selecionado automaticamente: ${GROQ_MODEL}`);
+        }
+    } catch (err) {
+        console.error("=============== ERRO DE ARRANQUE ===============");
+        console.error("Verifique a sua GROQ_API_KEY ou TELEGRAM_BOT_TOKEN no ficheiro .env!");
+        console.error(err.message);
+        console.error("================================================");
+    }
+}
+
+iniciarBot();
+
+// ==========================================
+// LER REGRAS
+// ==========================================
 const getRules = () => {
     try {
         return fs.readFileSync(path.join(__dirname, 'regras.txt'), 'utf8');
@@ -36,31 +57,27 @@ bot.on('message', async (msg) => {
     const userId = msg.from.id;
     const text = msg.text || '';
 
-    // Ignora mensagens de outros bots para evitar loops infinitos
     if (msg.from.is_bot) return; 
 
-    // ==========================================
-    // MODERAÇÃO ANTI-SPAM (APAGA LINKS)
-    // ==========================================
+    // MODERAÇÃO ANTI-SPAM
     const hasLink = msg.entities && msg.entities.some(entity => entity.type === 'url' || entity.type === 'text_link');
-
     if (hasLink) {
         try {
             await bot.deleteMessage(chatId, msg.message_id);
             await bot.banChatMember(chatId, userId);
             return; 
         } catch (error) {
-            console.error("Erro na moderação (Verifique se o Bot é Administrador):", error.message);
+            // Silencioso se não for admin
         }
     }
 
-    if (!text) return; // Ignora se não for texto (ex: imagens sem legenda)
+    if (!text) return;
 
-    // ==========================================
-    // IA - RESPOSTAS A PERGUNTAS (AGORA RESPONDE A TUDO)
-    // ==========================================
-    
-    // Remove o @nomedobot do texto, caso o utilizador ainda o use
+    // IGNORA COMANDO START (Não gasta IA atoa)
+    if (text === '/start') {
+        return bot.sendMessage(chatId, "Olá! Sou o assistente virtual da Bisq Investimentos. Como posso ajudar hoje?");
+    }
+
     const promptText = botUsername ? text.replace(`@${botUsername}`, '').trim() : text.trim();
     if (!promptText) return;
 
@@ -95,9 +112,10 @@ REGRA DE OURO: Se o utilizador fizer uma pergunta cuja resposta NÃO ESTEJA EXPL
         await bot.sendMessage(chatId, reply, { reply_to_message_id: msg.message_id });
 
     } catch (error) {
-        console.error("=============== ERRO DA GROQ ===============");
+        console.error("=============== ERRO DA GROQ NO CHAT ===============");
+        console.error(`Modelo tentado: ${GROQ_MODEL}`);
         console.error(error.message);
-        console.error("============================================");
+        console.error("====================================================");
         
         await bot.sendMessage(chatId, "Desculpe, estou a ter dificuldades técnicas de comunicação com a minha IA no momento. Tente novamente mais tarde.", { reply_to_message_id: msg.message_id });
     }

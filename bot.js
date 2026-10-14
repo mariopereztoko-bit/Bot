@@ -10,23 +10,20 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 let botUsername = '';
 let botId = '';
-let GROQ_MODEL = 'openai/gpt-oss-20b'; // Modelo de segurança caso a busca falhe
+let GROQ_MODEL = 'openai/gpt-oss-20b'; 
 
 // ==========================================
 // INICIALIZAÇÃO E AUTO-SELEÇÃO DE MODELO
 // ==========================================
 async function iniciarBot() {
     try {
-        // 1. Inicia o Telegram
         const info = await bot.getMe();
         botUsername = info.username;
         botId = info.id;
         console.log(`[SUCESSO] Bot do Telegram iniciado como @${botUsername}`);
 
-        // 2. Procura automaticamente um modelo válido da Groq
         const modelos = await groq.models.list();
         if (modelos && modelos.data && modelos.data.length > 0) {
-            // Pega no primeiro modelo disponível na sua conta
             GROQ_MODEL = modelos.data[0].id;
             console.log(`[SUCESSO] Modelo da Groq selecionado automaticamente: ${GROQ_MODEL}`);
         }
@@ -73,7 +70,7 @@ bot.on('message', async (msg) => {
 
     if (!text) return;
 
-    // IGNORA COMANDO START (Não gasta IA atoa)
+    // IGNORA COMANDO START
     if (text === '/start') {
         return bot.sendMessage(chatId, "Olá! Sou o assistente virtual da Bisq Investimentos. Como posso ajudar hoje?");
     }
@@ -86,8 +83,10 @@ bot.on('message', async (msg) => {
     try {
         const regrasAtuais = getRules();
         
+        // ADICIONADA REGRA PARA NÃO USAR ASTERISCOS
         const systemPrompt = `Você é o assistente virtual oficial do grupo da Bisq Investimentos.
 Seja educado e responda SEMPRE em Português de Moçambique de forma direta e sem usar emojis.
+NÃO use formatação markdown, não use negrito e NUNCA use asteriscos no seu texto.
 
 A sua única fonte de conhecimento é o texto abaixo. Leia com muita atenção:
 ---
@@ -107,7 +106,10 @@ REGRA DE OURO: Se o utilizador fizer uma pergunta cuja resposta NÃO ESTEJA EXPL
             max_tokens: 512
         });
 
-        const reply = chatCompletion.choices[0]?.message?.content || "Infelizmente não tenho essa informação, mas o administrador irá responder à sua questão em breve.";
+        let reply = chatCompletion.choices[0]?.message?.content || "Infelizmente não tenho essa informação, mas o administrador irá responder à sua questão em breve.";
+        
+        // FILTRO DE SEGURANÇA: Remove todos os asteriscos caso a IA ainda tente usá-los
+        reply = reply.replace(/\*/g, '');
         
         await bot.sendMessage(chatId, reply, { reply_to_message_id: msg.message_id });
 

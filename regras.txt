@@ -1,0 +1,47 @@
+INFORMAÇÕES GERAIS DA PLATAFORMA
+Nome: Bisq Investimentos
+Moeda Padrão: Metical (MT)
+Moeda Alternativa: Dólar (USD)
+Foco: Plataforma de investimentos com rendimentos diários e marketing multinível.
+
+COMO SE CADASTRAR (REGISTO)
+Para criar uma conta, o utilizador deve aceder ao site da plataforma, clicar em "Registar" e preencher o formulário com:
+- Nome Completo verdadeiro.
+- Número de telemóvel de Moçambique (Formato 84XXXXXXX, 85XXXXXXX, 86XXXXXXX ou 87XXXXXXX).
+- Senha (Palavra-passe) forte com no mínimo 6 caracteres.
+- Se o utilizador foi convidado, o código de convite (número de quem convidou) é preenchido automaticamente através do link.
+Ao criar a conta, o utilizador ganha imediatamente um bónus de boas-vindas de 100 MT no seu saldo.
+
+RECUPERAÇÃO DE SENHA / PROBLEMAS DE ACESSO
+Se um utilizador esquecer a sua palavra-passe ou tiver a conta bloqueada, ele deve entrar em contacto direto com o suporte oficial (@bisq_support_bot no Telegram ou pelo WhatsApp +258 84 000 0000) e fornecer o seu número de telemóvel para que a equipa administrativa faça a redefinição de segurança.
+
+REGRAS E LIMITES DE DEPÓSITO
+- Valor Mínimo de Depósito: 500 MT.
+- Valor Máximo de Depósito: 100.000 MT.
+- Métodos Aceites: M-Pesa (Vodacom), e-Mola (Movitel) e Criptomoeda USDT (Rede TRC20).
+- Como depositar via M-Pesa/e-Mola: O utilizador vai ao menu do seu telemóvel, transfere o valor para o número indicado na plataforma e, em seguida, insere a Referência da transação ou envia a captura de ecrã (screenshot) no site para o administrador aprovar.
+- Aprovação: Depósitos móveis são aprovados rapidamente após verificação do comprovativo. USDT é automático.
+
+REGRAS E LIMITES DE LEVANTAMENTO (SAQUE)
+- Valor Mínimo de Levantamento: 500 MT.
+- Valor Máximo de Levantamento: 50.000 MT.
+- Dias Permitidos: Apenas de Segunda-feira a Sexta-feira (Fins de semana encerrado).
+- Horário Permitido: 08:00 às 17:00 (Horário de Maputo). Pedidos fora deste horário serão rejeitados ou ficarão pendentes até ao dia seguinte.
+- Como levantar: O utilizador deve ir a "Definições", adicionar a sua conta (M-Pesa, e-Mola ou carteira USDT), ir a "Levantar", colocar o valor e confirmar.
+
+MERCADO E RENDIMENTOS (PLANOS)
+Os planos de investimento têm prazos variados. Quando um utilizador investe, ele recebe lucros diariamente.
+- Como recolher o lucro: O utilizador deve ir ao menu "Rendimentos" todos os dias e clicar em "Recolher Lucro de Hoje". A recolha só pode ser feita uma vez por dia (após a meia-noite). No fim do prazo do contrato, o capital inicial é devolvido ao saldo do utilizador.
+
+COMISSÕES DE REDE (CONVITES E BÓNUS)
+Os utilizadores podem ganhar dinheiro sem investir apenas convidando amigos.
+A plataforma paga em 3 níveis de profundidade:
+- Nível 1 (Indicados diretos): 15% do valor investido pelo convidado.
+- Nível 2 (Indicados dos seus indicados): 5% do valor.
+- Nível 3 (Terceira geração): 2% do valor.
+Existe também um bónus sobre o lucro diário da equipa, que é creditado ao líder consoante a produção dos subordinados. O link de convite encontra-se no menu "Equipa".
+
+REGRAS DO GRUPO DO TELEGRAM
+- É ESTRITAMENTE PROIBIDO partilhar links neste grupo.
+- Não é permitido ofender outros membros ou a equipa administrativa.
+- Qualquer quebra destas regras resulta no banimento imediato e automático pelo bot.

@@ -11,20 +11,18 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 let botUsername = '';
 let botId = '';
 
-// ATUALIZAÇÃO: Modelo alterado para a versão "Llama 3.1 8B Instant", que está 
-// 100% disponível, funcional e otimizada para contas do plano gratuito (Developer Tier).
-const GROQ_MODEL = 'llama-3.1-8b-instant'; 
+// ATUALIZAÇÃO: Alterado para o "llama3-8b-8192" 
+// Este é o modelo base original que historicamente tem a maior estabilidade 
+// e permissão em contas gratuitas na API da Groq.
+const GROQ_MODEL = 'llama3-8b-8192'; 
 
 // ==========================================
 // FILA DE MENSAGENS (MESSAGE QUEUE)
-// Previne bloqueios (Rate Limit) na API da Groq
 // ==========================================
 const messageQueue = [];
 let isProcessingQueue = false;
 
-// Intervalo entre as chamadas da Groq (em milissegundos)
 const QUEUE_DELAY = 1500; 
-// Máximo de mensagens na fila antes de começar a ignorar novos spams
 const MAX_QUEUE_SIZE = 30;
 
 async function processQueue() {
@@ -33,7 +31,6 @@ async function processQueue() {
     isProcessingQueue = true;
 
     while (messageQueue.length > 0) {
-        // Retira a primeira tarefa da fila
         const task = messageQueue.shift();
         
         try {
@@ -42,7 +39,6 @@ async function processQueue() {
             console.error("[ERRO NA FILA DO BOT]", err.message);
         }
 
-        // Aguarda antes de prosseguir para a próxima (Rate Limit Control)
         await new Promise(resolve => setTimeout(resolve, QUEUE_DELAY));
     }
 
@@ -85,7 +81,7 @@ bot.on('message', async (msg) => {
 
     if (msg.from.is_bot) return; 
 
-    // MODERAÇÃO ANTI-SPAM (URL BAN) - Continua sempre a vigiar o grupo em silêncio
+    // MODERAÇÃO ANTI-SPAM
     const hasLink = msg.entities && msg.entities.some(entity => entity.type === 'url' || entity.type === 'text_link');
     if (hasLink) {
         try {
@@ -93,7 +89,7 @@ bot.on('message', async (msg) => {
             await bot.banChatMember(chatId, userId);
             return; 
         } catch (error) {
-            // Silencioso se não tiver permissão de admin
+            // Silencioso se não tiver permissão
         }
     }
 
@@ -103,33 +99,23 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, "Olá! Sou o assistente virtual de IA da Bisq Investimentos. Como posso ajudar hoje?");
     }
 
-    // ==========================================
-    // REGRA DE SILÊNCIO NO GRUPO
-    // ==========================================
     if (isGroup) {
-        // Verifica se o bot foi mencionado (ex: @bisqmozBot)
         const isMentioned = botUsername && text.includes(`@${botUsername}`);
-        
-        // Verifica se o utilizador está a responder (Reply) a uma mensagem enviada pelo bot
         const isReplyToBot = msg.reply_to_message && msg.reply_to_message.from.id === botId;
         
-        // Se NÃO foi mencionado e NÃO é uma resposta a ele, o bot ignora e deixa os usuários falarem
         if (!isMentioned && !isReplyToBot) {
             return; 
         }
     }
 
-    // Limpa a tag do bot da mensagem para não confundir a Inteligência Artificial
     const promptText = botUsername ? text.replace(new RegExp(`@${botUsername}`, 'gi'), '').trim() : text.trim();
     if (!promptText) return;
 
-    // Se houver Spam imenso, o bot ignora requisições novas
     if (messageQueue.length >= MAX_QUEUE_SIZE) {
         console.log(`[AVISO] Fila do Bot cheia. Ignorando requisição.`);
         return;
     }
 
-    // Adiciona o trabalho da Groq na fila
     messageQueue.push(async () => {
         bot.sendChatAction(chatId, 'typing');
 
@@ -160,22 +146,23 @@ REGRA DE OURO: Se o utilizador fizer uma pergunta cuja resposta NÃO ESTEJA EXPL
 
             let reply = chatCompletion.choices[0]?.message?.content || "Infelizmente não tenho essa informação, mas o administrador irá responder à sua questão em breve.";
             
-            // FILTRO ADICIONAL: Remove asteriscos e caracteres de markdown indesejados
             reply = reply.replace(/[*_~`#]/g, '');
             
             await bot.sendMessage(chatId, reply, { reply_to_message_id: msg.message_id });
 
         } catch (error) {
-            console.error("=============== ERRO DA GROQ ===============");
+            console.error("=============== ERRO DETALHADO DA GROQ ===============");
+            // Aqui adicionamos o error.message para o terminal logar exatamente o porquê 
+            // de ter falhado (ex: apiKey inválida, modelo não existe, limites, etc).
             console.error(error.message);
+            console.error(error);
+            console.error("======================================================");
             
-            // Só responde com erro se não for erro de rate limit, para não encher o grupo de lixo se a API cair.
             if (!error.message.toLowerCase().includes('rate limit')) {
                 await bot.sendMessage(chatId, "Infelizmente não consegui processar a sua questão devido a um erro técnico da plataforma. O administrador irá ajudá-lo em breve.", { reply_to_message_id: msg.message_id });
             }
         }
     });
 
-    // Arranca a fila se ela estiver parada
     processQueue();
 });

@@ -11,10 +11,9 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 let botUsername = '';
 let botId = '';
 
-// ATUALIZAÇÃO: Alterado para o "llama3-8b-8192" 
-// Este é o modelo base original que historicamente tem a maior estabilidade 
-// e permissão em contas gratuitas na API da Groq.
-const GROQ_MODEL = 'llama3-8b-8192'; 
+// ATUALIZAÇÃO: O modelo "llama3-8b-8192" foi descontinuado pela Groq.
+// O substituto oficial, gratuito e funcional é o "llama-3.1-8b-instant".
+const GROQ_MODEL = 'llama-3.1-8b-instant'; 
 
 // ==========================================
 // FILA DE MENSAGENS (MESSAGE QUEUE)
@@ -152,8 +151,6 @@ REGRA DE OURO: Se o utilizador fizer uma pergunta cuja resposta NÃO ESTEJA EXPL
 
         } catch (error) {
             console.error("=============== ERRO DETALHADO DA GROQ ===============");
-            // Aqui adicionamos o error.message para o terminal logar exatamente o porquê 
-            // de ter falhado (ex: apiKey inválida, modelo não existe, limites, etc).
             console.error(error.message);
             console.error(error);
             console.error("======================================================");

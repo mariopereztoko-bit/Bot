@@ -1,47 +1,62 @@
-INFORMAÇÕES GERAIS DA PLATAFORMA
+INFORMACOES GERAIS DA PLATAFORMA
 Nome: Bisq Investimentos
-Moeda Padrão: Metical (MT)
-Moeda Alternativa: Dólar (USD)
-Foco: Plataforma de investimentos com rendimentos diários e marketing multinível.
+Moeda Padrao: Metical (MT)
+Moeda Alternativa: Dolar (USD)
+Foco: Plataforma segura de investimentos com rendimentos diarios e sistema de afiliados.
 
-COMO SE CADASTRAR (REGISTO)
-Para criar uma conta, o utilizador deve aceder ao site da plataforma, clicar em "Registar" e preencher o formulário com:
+DIRETRIZES DE SEGURANCA E PROTECAO DA CONTA (MUITO IMPORTANTE)
+- A Bisq Investimentos NUNCA pedira a sua palavra-passe fora da plataforma.
+- A equipa de suporte NUNCA entra em contacto primeiro a pedir dinheiro ou transferencias diretas.
+- Todos os depositos devem ser feitos EXCLUSIVAMENTE atraves dos numeros gerados dentro do site ou aplicativo oficial. Nunca envie dinheiro para numeros enviados aqui no Telegram.
+- Crie senhas fortes (misturando letras e numeros) e nao partilhe o seu ID de conta publicamente.
+- Ao aceder em telemoveis ou computadores de terceiros, lembre-se sempre de ir a "Perfil" e clicar em "Terminar Sessao em Seguranca".
+
+COMO SE CADASTRAR (REGISTO) E BONUS
+Para criar uma conta, o utilizador deve aceder ao site da plataforma, clicar em "Registar" e preencher o formulario com:
 - Nome Completo verdadeiro.
-- Número de telemóvel de Moçambique (Formato 84XXXXXXX, 85XXXXXXX, 86XXXXXXX ou 87XXXXXXX).
-- Senha (Palavra-passe) forte com no mínimo 6 caracteres.
-- Se o utilizador foi convidado, o código de convite (número de quem convidou) é preenchido automaticamente através do link.
-Ao criar a conta, o utilizador ganha imediatamente um bónus de boas-vindas de 100 MT no seu saldo.
+- Numero de telemovel de Mocambique (Formato 84XXXXXXX, 85XXXXXXX, 86XXXXXXX ou 87XXXXXXX).
+- Senha (Palavra-passe) forte com no minimo 6 caracteres.
+- Se o utilizador foi convidado, o codigo de convite preenche-se automaticamente atraves do link.
+Ao criar a conta, o utilizador ganha imediatamente um bonus de boas-vindas de 100 MT no seu saldo para ajudar no inicio.
 
-RECUPERAÇÃO DE SENHA / PROBLEMAS DE ACESSO
-Se um utilizador esquecer a sua palavra-passe ou tiver a conta bloqueada, ele deve entrar em contacto direto com o suporte oficial (@bisq_support_bot no Telegram ou pelo WhatsApp +258 84 000 0000) e fornecer o seu número de telemóvel para que a equipa administrativa faça a redefinição de segurança.
+RECUPERACAO DE SENHA E PROBLEMAS DE ACESSO
+Se um utilizador esquecer a sua palavra-passe, tiver a conta bloqueada ou suspeitar de invasao, ele deve entrar em contacto direto com o suporte oficial (@bisq_support_bot no Telegram ou pelo WhatsApp +258 84 000 0000). Devera fornecer o seu numero de telemovel para que a equipa administrativa valide a identidade e faca a redefinicao com total seguranca.
 
-REGRAS E LIMITES DE DEPÓSITO
-- Valor Mínimo de Depósito: 500 MT.
-- Valor Máximo de Depósito: 100.000 MT.
-- Métodos Aceites: M-Pesa (Vodacom), e-Mola (Movitel) e Criptomoeda USDT (Rede TRC20).
-- Como depositar via M-Pesa/e-Mola: O utilizador vai ao menu do seu telemóvel, transfere o valor para o número indicado na plataforma e, em seguida, insere a Referência da transação ou envia a captura de ecrã (screenshot) no site para o administrador aprovar.
-- Aprovação: Depósitos móveis são aprovados rapidamente após verificação do comprovativo. USDT é automático.
+REGRAS E LIMITES DE DEPOSITO
+- Valor Minimo de Deposito: 100 MT.
+- Valor Maximo de Deposito: 100.000 MT.
+- Metodos Aceites: M-Pesa (Vodacom), e-Mola (Movitel) e Criptomoeda USDT (Rede TRC20, via BlockBee).
+- Como depositar via M-Pesa/e-Mola: O utilizador vai a seccao "Depositar", copia o numero oficial da Bisq, vai ao menu do seu telemovel, transfere o valor e, em seguida, insere a Referencia da transacao no site OU anexa a imagem do comprovativo.
+- Aprovasao: Depositos moveis sao aprovados rapidamente pela equipa apos a verificacao do comprovativo. O deposito em USDT e 100% automatico.
+
+MERCADO E RENDIMENTOS (PLANOS DE INVESTIMENTO)
+Os planos de investimento tem prazos e lucros variados. Quando um utilizador investe, o valor e deduzido do saldo e ele passa a receber lucros diarios.
+- Como comprar um plano: O utilizador vai a "Mercado" (ou Planos), escolhe o plano adequado ao seu saldo e clica em "Comprar".
+- Como recolher o lucro diario: O utilizador DEVE ir ao menu "Rendimentos" todos os dias e clicar em "Recolher Lucro de Hoje". 
+- Regra de Recolha: A recolha so pode ser feita uma vez por dia (reinicia as 00:00, horario de Maputo).
+- Fim do Contrato: No ultimo dia do prazo do plano, o contrato e concluido e o Capital Inicial investido e automaticamente devolvido ao saldo principal do utilizador.
 
 REGRAS E LIMITES DE LEVANTAMENTO (SAQUE)
-- Valor Mínimo de Levantamento: 500 MT.
-- Valor Máximo de Levantamento: 50.000 MT.
-- Dias Permitidos: Apenas de Segunda-feira a Sexta-feira (Fins de semana encerrado).
-- Horário Permitido: 08:00 às 17:00 (Horário de Maputo). Pedidos fora deste horário serão rejeitados ou ficarão pendentes até ao dia seguinte.
-- Como levantar: O utilizador deve ir a "Definições", adicionar a sua conta (M-Pesa, e-Mola ou carteira USDT), ir a "Levantar", colocar o valor e confirmar.
+- Valor Minimo de Levantamento: 500 MT.
+- Valor Maximo de Levantamento: 50.000 MT.
+- Dias Permitidos para Saque: Apenas Dias Uteis (Segunda-feira a Sexta-feira). Fins de semana a plataforma de levantamentos encontra-se encerrada.
+- Horario Permitido: Das 08:00 as 17:00 (Horario de Maputo). Pedidos feitos fora deste horario ou em dias nao permitidos serao rejeitados pelo sistema.
+- Como levantar: O utilizador deve primeiro ir a "Perfil", clicar em "Adicionar Nova Conta" (M-Pesa, e-Mola ou carteira USDT). Depois, vai a "Levantar", insere o valor, seleciona a conta guardada e confirma. O saldo e deduzido e entra em analise para pagamento.
 
-MERCADO E RENDIMENTOS (PLANOS)
-Os planos de investimento têm prazos variados. Quando um utilizador investe, ele recebe lucros diariamente.
-- Como recolher o lucro: O utilizador deve ir ao menu "Rendimentos" todos os dias e clicar em "Recolher Lucro de Hoje". A recolha só pode ser feita uma vez por dia (após a meia-noite). No fim do prazo do contrato, o capital inicial é devolvido ao saldo do utilizador.
+COMISSOES DE REDE (SISTEMA DE AFILIADOS / CONVITES)
+Os utilizadores podem gerar rendimentos passivos sem investir, apenas convidando novos membros. A Bisq paga comissoes diretas no ato do investimento do convidado em 3 niveis de profundidade:
+- Nivel 1 (Indicados diretos): 15% do valor investido pelo seu convidado.
+- Nivel 2 (Indicados dos seus indicados): 5% do valor investido.
+- Nivel 3 (Terceira geracao): 2% do valor investido.
+Tambem existem bonus diarios gerados sobre o lucro da equipa. O utilizador pode encontrar o seu "Link de Convite" no menu "Equipa", onde tambem pode acompanhar o estado de todos os membros da sua rede.
 
-COMISSÕES DE REDE (CONVITES E BÓNUS)
-Os utilizadores podem ganhar dinheiro sem investir apenas convidando amigos.
-A plataforma paga em 3 níveis de profundidade:
-- Nível 1 (Indicados diretos): 15% do valor investido pelo convidado.
-- Nível 2 (Indicados dos seus indicados): 5% do valor.
-- Nível 3 (Terceira geração): 2% do valor.
-Existe também um bónus sobre o lucro diário da equipa, que é creditado ao líder consoante a produção dos subordinados. O link de convite encontra-se no menu "Equipa".
+REGRAS DO GRUPO DO TELEGRAM (MODERACAO)
+- E ESTRITAMENTE PROIBIDO partilhar links neste grupo. O sistema de IA e de moderacao bane automaticamente qualquer pessoa que envie links.
+- Nao e permitido ofender outros membros, espalhar noticias falsas (FUD) ou desrespeitar a equipa administrativa.
+- Nao envie comprovativos de deposito no grupo publico, envie-os apenas dentro da plataforma ou ao suporte oficial para proteger os seus dados.
+- Qualquer quebra destas regras resulta no banimento imediato sem aviso previo.
 
-REGRAS DO GRUPO DO TELEGRAM
-- É ESTRITAMENTE PROIBIDO partilhar links neste grupo.
-- Não é permitido ofender outros membros ou a equipa administrativa.
-- Qualquer quebra destas regras resulta no banimento imediato e automático pelo bot.
+ATENDIMENTO AO CLIENTE
+Se tiver problemas com depositos pendentes por mais de 30 minutos, dificuldades em levantar fundos ou duvidas tecnicas, contacte diretamente:
+- Telegram Suporte Oficial: @bisq_support_bot
+- WhatsApp Suporte: +258 84 000 0000

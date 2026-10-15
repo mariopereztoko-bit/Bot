@@ -11,9 +11,9 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 let botUsername = '';
 let botId = '';
 
-// ATUALIZAÇÃO: O modelo "llama3-8b-8192" foi descontinuado pela Groq.
-// O substituto oficial, gratuito e funcional é o "llama-3.1-8b-instant".
-const GROQ_MODEL = 'llama-3.1-8b-instant'; 
+// ATUALIZAÇÃO 2026: O código de seleção automática foi completamente removido!
+// A Groq atualizou o seu catálogo. O modelo de texto correto para contas em 2026 é este:
+const GROQ_MODEL = 'openai/gpt-oss-20b'; 
 
 // ==========================================
 // FILA DE MENSAGENS (MESSAGE QUEUE)

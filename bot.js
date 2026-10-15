@@ -10,7 +10,10 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 let botUsername = '';
 let botId = '';
-let GROQ_MODEL = 'openai/gpt-oss-20b'; 
+
+// ATUALIZAÇÃO: Modelo alterado para a versão "Llama 3.1 8B Instant", que está 
+// 100% disponível, funcional e otimizada para contas do plano gratuito (Developer Tier).
+const GROQ_MODEL = 'llama-3.1-8b-instant'; 
 
 // ==========================================
 // FILA DE MENSAGENS (MESSAGE QUEUE)
@@ -55,12 +58,6 @@ async function iniciarBot() {
         botUsername = info.username;
         botId = info.id;
         console.log(`[SUCESSO] Bot do Telegram iniciado como @${botUsername}`);
-
-        const modelos = await groq.models.list();
-        if (modelos && modelos.data && modelos.data.length > 0) {
-            GROQ_MODEL = modelos.data[0].id;
-            console.log(`[SUCESSO] Modelo da Groq selecionado automaticamente: ${GROQ_MODEL}`);
-        }
     } catch (err) {
         console.error("=============== ERRO DE ARRANQUE ===============");
         console.error("Verifique a sua GROQ_API_KEY ou TELEGRAM_BOT_TOKEN no ficheiro .env!");
@@ -116,7 +113,7 @@ bot.on('message', async (msg) => {
         // Verifica se o utilizador está a responder (Reply) a uma mensagem enviada pelo bot
         const isReplyToBot = msg.reply_to_message && msg.reply_to_message.from.id === botId;
         
-        // Se NÃO foi mencionado e NÃO é uma resposta a ele, o bot ignora e deixa o admin falar
+        // Se NÃO foi mencionado e NÃO é uma resposta a ele, o bot ignora e deixa os usuários falarem
         if (!isMentioned && !isReplyToBot) {
             return; 
         }
@@ -172,8 +169,9 @@ REGRA DE OURO: Se o utilizador fizer uma pergunta cuja resposta NÃO ESTEJA EXPL
             console.error("=============== ERRO DA GROQ ===============");
             console.error(error.message);
             
-            if (!error.message.includes('Rate limit')) {
-                await bot.sendMessage(chatId, "Desculpe, estou a enfrentar constrangimentos técnicos temporários. Tente novamente mais tarde.", { reply_to_message_id: msg.message_id });
+            // Só responde com erro se não for erro de rate limit, para não encher o grupo de lixo se a API cair.
+            if (!error.message.toLowerCase().includes('rate limit')) {
+                await bot.sendMessage(chatId, "Infelizmente não consegui processar a sua questão devido a um erro técnico da plataforma. O administrador irá ajudá-lo em breve.", { reply_to_message_id: msg.message_id });
             }
         }
     });

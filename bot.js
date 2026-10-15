@@ -84,10 +84,11 @@ bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const userId = msg.from.id;
     const text = msg.text || '';
+    const isGroup = msg.chat.type === 'group' || msg.chat.type === 'supergroup';
 
     if (msg.from.is_bot) return; 
 
-    // MODERAÇÃO ANTI-SPAM (URL BAN)
+    // MODERAÇÃO ANTI-SPAM (URL BAN) - Continua sempre a vigiar o grupo em silêncio
     const hasLink = msg.entities && msg.entities.some(entity => entity.type === 'url' || entity.type === 'text_link');
     if (hasLink) {
         try {
@@ -105,12 +106,29 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, "Olá! Sou o assistente virtual de IA da Bisq Investimentos. Como posso ajudar hoje?");
     }
 
-    const promptText = botUsername ? text.replace(`@${botUsername}`, '').trim() : text.trim();
+    // ==========================================
+    // REGRA DE SILÊNCIO NO GRUPO
+    // ==========================================
+    if (isGroup) {
+        // Verifica se o bot foi mencionado (ex: @bisqmozBot)
+        const isMentioned = botUsername && text.includes(`@${botUsername}`);
+        
+        // Verifica se o utilizador está a responder (Reply) a uma mensagem enviada pelo bot
+        const isReplyToBot = msg.reply_to_message && msg.reply_to_message.from.id === botId;
+        
+        // Se NÃO foi mencionado e NÃO é uma resposta a ele, o bot ignora e deixa o admin falar
+        if (!isMentioned && !isReplyToBot) {
+            return; 
+        }
+    }
+
+    // Limpa a tag do bot da mensagem para não confundir a Inteligência Artificial
+    const promptText = botUsername ? text.replace(new RegExp(`@${botUsername}`, 'gi'), '').trim() : text.trim();
     if (!promptText) return;
 
-    // Se houver Spam imenso no grupo, o bot ignora novas mensagens para não sobrecarregar
+    // Se houver Spam imenso, o bot ignora requisições novas
     if (messageQueue.length >= MAX_QUEUE_SIZE) {
-        console.log(`[AVISO] Fila do Bot cheia (${MAX_QUEUE_SIZE} msgs). Ignorando requisição de ${msg.from.first_name}.`);
+        console.log(`[AVISO] Fila do Bot cheia. Ignorando requisição.`);
         return;
     }
 
@@ -154,7 +172,6 @@ REGRA DE OURO: Se o utilizador fizer uma pergunta cuja resposta NÃO ESTEJA EXPL
             console.error("=============== ERRO DA GROQ ===============");
             console.error(error.message);
             
-            // Só avisa de falha em caso de timeout forte, para não causar "Spam de Erro" na Queue
             if (!error.message.includes('Rate limit')) {
                 await bot.sendMessage(chatId, "Desculpe, estou a enfrentar constrangimentos técnicos temporários. Tente novamente mais tarde.", { reply_to_message_id: msg.message_id });
             }

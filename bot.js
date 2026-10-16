@@ -11,9 +11,9 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 let botUsername = '';
 let botId = '';
 
-// ATUALIZAÇÃO 2026: O código de seleção automática foi completamente removido!
-// A Groq atualizou o seu catálogo. O modelo de texto correto para contas em 2026 é este:
-const GROQ_MODEL = 'openai/gpt-oss-20b'; 
+// ATUALIZAÇÃO DEFINITIVA: O modelo "mixtral-8x7b-32768" é um dos mais estáveis, 
+// rápidos e que nunca é bloqueado no plano gratuito da Groq.
+const GROQ_MODEL = 'mixtral-8x7b-32768'; 
 
 // ==========================================
 // FILA DE MENSAGENS (MESSAGE QUEUE)
@@ -80,6 +80,25 @@ bot.on('message', async (msg) => {
 
     if (msg.from.is_bot) return; 
 
+    // ==========================================
+    // SISTEMA DE BOAS-VINDAS NO GRUPO
+    // ==========================================
+    if (msg.new_chat_members) {
+        for (const member of msg.new_chat_members) {
+            // Ignora se o novo membro for o próprio bot
+            if (member.id === botId) continue;
+            
+            const welcomeText = `Olá, ${member.first_name}! Bem-vindo(a) ao grupo oficial da Bisq Investimentos.\n\nSou o assistente virtual de IA. Para fazer perguntas e receber respostas imediatamente aqui no grupo, lembre-se sempre de mencionar o meu nome (exemplo: @${botUsername}) na sua mensagem, ou de responder diretamente a uma mensagem minha.`;
+            
+            try {
+                await bot.sendMessage(chatId, welcomeText);
+            } catch (error) {
+                console.error("Erro ao enviar boas-vindas", error.message);
+            }
+        }
+        return; // Interrompe para não processar a entrada como uma mensagem de chat para a IA
+    }
+
     // MODERAÇÃO ANTI-SPAM
     const hasLink = msg.entities && msg.entities.some(entity => entity.type === 'url' || entity.type === 'text_link');
     if (hasLink) {
@@ -95,7 +114,8 @@ bot.on('message', async (msg) => {
     if (!text) return;
 
     if (text === '/start') {
-        return bot.sendMessage(chatId, "Olá! Sou o assistente virtual de IA da Bisq Investimentos. Como posso ajudar hoje?");
+        const startText = `Olá! Sou o assistente virtual de IA da Bisq Investimentos.\n\nComo posso ajudar hoje?\n\nDica: Se estiver a falar no grupo, lembre-se de me mencionar (ex: @${botUsername}) ou responder a uma mensagem minha para que eu saiba que está a falar comigo.`;
+        return bot.sendMessage(chatId, startText);
     }
 
     if (isGroup) {
